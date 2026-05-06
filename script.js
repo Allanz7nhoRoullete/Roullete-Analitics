@@ -1,78 +1,52 @@
-let historico = [];
-
-const vermelhos = [
-  1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36
-];
-
-function corNumero(n) {
-  if (n === 0) return "zero";
-  return vermelhos.includes(n) ? "vermelho" : "preto";
+body {
+  font-family: Arial;
+  text-align: center;
+  background: #111;
+  color: #fff;
 }
 
-// Criar botões
-function criarRoleta() {
-  const roletaDiv = document.getElementById("roleta");
-
-  for (let i = 0; i <= 36; i++) {
-    let btn = document.createElement("button");
-    btn.innerText = i;
-    btn.className = corNumero(i);
-    btn.onclick = () => addNumero(i);
-    roletaDiv.appendChild(btn);
-  }
+#roleta {
+  display: grid;
+  grid-template-columns: repeat(3, 70px);
+  gap: 5px;
+  justify-content: center;
+  margin: 20px;
 }
 
-function addNumero(n) {
-  historico.push(n);
-
-  if (historico.length > 100) {
-    historico.shift();
-  }
-
-  atualizarTela();
+button {
+  padding: 15px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-function ultimos30() {
-  return historico.slice(-30);
+.vermelho { background: #c0392b; }
+.preto { background: #2c3e50; }
+.zero { background: #27ae60; }
+
+#historico {
+  margin: 15px;
+  font-size: 18px;
+  background: #222;
+  padding: 10px;
+  border-radius: 10px;
 }
 
-// Camuflado
-function somaDigitos(n) {
-  if (n < 10) return n;
-  return Math.floor(n / 10) + (n % 10);
+.painel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 15px;
+  padding: 10px;
 }
 
-function diferencaDigitos(n) {
-  if (n < 10) return 0;
-  let a = Math.floor(n / 10);
-  let b = n % 10;
-  return Math.abs(a - b);
+.bloco {
+  background: #222;
+  padding: 10px;
+  border-radius: 10px;
 }
 
-// Análise
-function atualizarTela() {
-  document.getElementById("historico").innerText =
-    historico.join(" - ");
-
-  let dados = ultimos30();
-
-  let terminais = {};
-  let camuflados = {};
-
-  dados.forEach(n => {
-    let t = n % 10;
-    terminais[t] = (terminais[t] || 0) + 1;
-
-    let s = somaDigitos(n);
-    let d = diferencaDigitos(n);
-
-    camuflados[s] = (camuflados[s] || 0) + 1;
-    camuflados[d] = (camuflados[d] || 0) + 1;
-  });
-
-  document.getElementById("analise").innerText =
-    "Terminais:\n" + JSON.stringify(terminais, null, 2) +
-    "\n\nCamuflados:\n" + JSON.stringify(camuflados, null, 2);
+h3 {
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
 }
-
-criarRoleta();
