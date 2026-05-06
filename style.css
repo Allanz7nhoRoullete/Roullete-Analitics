@@ -1,0 +1,38 @@
+body {
+  font-family: Arial;
+  text-align: center;
+}
+
+#roleta {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  gap: 5px;
+  justify-content: center;
+  margin: 20px;
+}
+
+button {
+  padding: 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.vermelho {
+  background: red;
+  color: white;
+}
+
+.preto {
+  background: black;
+  color: white;
+}
+
+.zero {
+  background: green;
+  color: white;
+}
+
+#historico {
+  margin: 10px;
+  font-size: 18px;
+}
